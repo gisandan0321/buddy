@@ -61,6 +61,7 @@ class _SearchState extends State<Search> {
             ),
           ),
           leading: null,
+          elevation: 0,
           automaticallyImplyLeading: false,
           actions: <Widget>[
             new FlatButton(
