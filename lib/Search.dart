@@ -17,6 +17,8 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return new Scaffold(
         appBar: new AppBar(
           title: new Container(
@@ -45,18 +47,32 @@ class _SearchState extends State<Search> {
                 filled: true,
                 focusColor: Colors.black,
                 contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                prefixIcon: new Icon(Icons.search, color: Colors.black,),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(color: Colors.white)
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(color: Colors.transparent)
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black45),
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
               ),
               cursorColor: Colors.blue,
             ),
           ),
+          leading: null,
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Cancel"
+              ),
+            )
+          ],
+          backgroundColor: Colors.white,
         ),
         body: new Center(
           child: new Text("Search Result here"),
