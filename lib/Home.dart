@@ -24,7 +24,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin  {
   @override
   void initState() {
     tabController = new TabController(length: 2, vsync: this, initialIndex: 0);
+    tabController.addListener(onTabClick);
     super.initState();
+  }
+
+  void onTabClick() {
+    setState(() {
+      view = "";
+    });
   }
 
   @override
