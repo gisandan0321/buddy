@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
           textAlign: TextAlign.center,
         ),
         new SizedBox(height: 20),
-        new Text("Press the back button to go back of your phone to the previous screen",
+        new Text("Press the back button of your phone to go back to the previous screen",
           textAlign: TextAlign.center,
         )
       ],
