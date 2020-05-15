@@ -17,8 +17,6 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return new Scaffold(
         appBar: new AppBar(
           title: new Container(
@@ -57,7 +55,7 @@ class _SearchState extends State<Search> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
               ),
-              cursorColor: Colors.blue,
+              cursorColor: Colors.orange,
             ),
           ),
           leading: null,

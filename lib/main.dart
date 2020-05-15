@@ -15,8 +15,8 @@ void main() {
     title: "Buddy",
     debugShowCheckedModeBanner: false,
     theme: new ThemeData(
-        primarySwatch: Colors.blue,
-        accentColor: Colors.blue,
+        primarySwatch: Colors.orange,
+        accentColor: Colors.orange,
         brightness: Brightness.light,
         dialogBackgroundColor: Colors.white
       // or Colors.green or any color darker than white (this is line 66)
