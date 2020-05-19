@@ -113,6 +113,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin  {
                 });
               }
           ),
+          actions: <Widget>[
+            new IconButton(
+                icon: new Icon(Icons.favorite_border),
+                onPressed: () {
+                  // Favorite Action Here
+                }
+            )
+          ],
           elevation: 0, // Hide the shadow
           backgroundColor: Colors.white,
           bottom: new PreferredSize(
