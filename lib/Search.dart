@@ -73,8 +73,16 @@ class _SearchState extends State<Search> {
           ],
           backgroundColor: Colors.white,
         ),
-        body: new Center(
-          child: new Text("Search Result here"),
+        body: new ListView(
+          children: <Widget>[
+            new ListTile(
+              onTap: () {
+                Navigator.pop(context, "search value");
+              },
+              title: new Text("Result 1"),
+              subtitle: new Text("Subtitle text"),
+            )
+          ],
         )
     );
   }

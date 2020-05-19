@@ -14,17 +14,20 @@ class Home extends StatefulWidget {
   _HomeState createState() => new _HomeState();
 }
 
-class _HomeState extends State<Home> with TickerProviderStateMixin  {
+class _HomeState extends State<Home> with TickerProviderStateMixin  { 
 
   TabController tabController;
+  TabController innerTabController;
 
   bool isLoggedIn = false;
   String view = "";
+  bool replaceSearchPageWithProfilePage = false;
 
   @override
   void initState() {
     tabController = new TabController(length: 2, vsync: this, initialIndex: 0);
     tabController.addListener(onTabClick);
+    innerTabController = new TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
   }
 
@@ -32,6 +35,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin  {
     setState(() {
       view = "";
     });
+  }
+
+  // Search Route
+  searchRoute() async { // async - to set the function as asynchronous
+    // await - to wait the new route to end
+    var response = await Navigator.push(context, SlideLeft(page: Search()));
+    if (response != null) { // If Search Page has a return value
+      setState(() { // setState - to notify the view that we will be showing the profile screen
+        replaceSearchPageWithProfilePage = true;
+      });
+    }
   }
 
   @override
@@ -46,13 +60,95 @@ class _HomeState extends State<Home> with TickerProviderStateMixin  {
             view = "";
           });
           return false;
+        } else if (replaceSearchPageWithProfilePage) {
+          setState(() {
+            replaceSearchPageWithProfilePage = false;
+          });
+          return false;
         } else {
-          return true;
+        return true;
         }
       },
       child: new Scaffold(
+        appBar: (replaceSearchPageWithProfilePage) ? new AppBar(
+          title: new Container(
+            height: 40,
+            child: new TextField(
+              keyboardType: TextInputType.text,
+              autofocus: false,
+              focusNode: new AlwaysDisabledFocusNode(),
+              onChanged: (value) {
+                setState(() {
+                  searchRoute(); // Route to search page again
+                });
+              },
+              decoration: InputDecoration(
+                hintText: "Search here...",
+                labelStyle: new TextStyle(
+                    color: Colors.grey
+                ),
+                hasFloatingPlaceholder: false,
+                fillColor: Colors.white,
+                filled: true,
+                focusColor: Colors.black,
+                contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                prefixIcon: new Icon(Icons.search, color: Colors.black,),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(color: Colors.transparent)
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+              cursorColor: Colors.orange,
+            ),
+          ),
+          leading: new IconButton(
+              icon: new Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                setState(() {
+                  replaceSearchPageWithProfilePage = false; // Hide the profile screen and show back the search screen
+                });
+              }
+          ),
+          elevation: 0, // Hide the shadow
+          backgroundColor: Colors.white,
+          bottom: new PreferredSize(
+              child: new Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+                child: new TabBar(
+                    controller: innerTabController,
+                    indicator: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            color: Theme.of(context).accentColor,
+                            width: 2.0
+                        ),
+                      ),
+                    ),
+                    labelColor: Colors.orange,
+                    unselectedLabelColor: Colors.grey,
+                    tabs: <Widget>[
+                      new Tab(text: "Tab 1"),
+                      new Tab(text: "Tab 2"),
+                    ]
+                ),
+              ),
+              preferredSize: new Size(MediaQuery.of(context).size.width, 48)
+          ),
+        ) : null, // null - if screen is search and show the app bar if screen is profile page
         body: TabBarView(
           children: <Widget>[
+            (replaceSearchPageWithProfilePage) ? new TabBarView(
+              controller: innerTabController,
+              children: <Widget>[
+                new Center(child: new Text("Inner Tab 1")), // Load Screen Here
+                new Center(child: new Text("Inner Tab 2")) // Load Screen Here
+              ],
+            ) : // Show Profile Screen and show tab bar view in the action bar
             new Column(
               children: <Widget>[
                 new SizedBox(height: 50),
@@ -77,7 +173,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin  {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(context, SlideLeft(page: Search()));
+                      searchRoute();
                     },
                   ),
                 )
